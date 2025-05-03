@@ -4,6 +4,11 @@ module com.baiching.filesearch {
 
     requires org.controlsfx.controls;
     requires org.kordamp.bootstrapfx.core;
+    requires jinputhook;
+    requires jinput;
+    requires com.github.kwhat.jnativehook;
+    requires com.sun.jna;
+    requires com.sun.jna.platform;
 
     opens com.baiching.filesearch to javafx.fxml;
     exports com.baiching.filesearch;
