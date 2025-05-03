@@ -1,2 +1,4 @@
-package com.baiching.filesearch.search;public class SearchService {
+package com.baiching.filesearch.search;
+
+public class SearchService {
 }
