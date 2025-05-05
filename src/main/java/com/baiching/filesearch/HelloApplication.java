@@ -16,7 +16,7 @@ public class HelloApplication extends Application {
     public void start(Stage stage) throws IOException {
         primaryStage = stage;
         setupUI();
-        HotKeyManager.registerHotKey(this::toggleWindow);
+        //HotKeyManager.registerHotKey(this::toggleWindow);
     }
 
     public static void main(String[] args) {
@@ -43,7 +43,7 @@ public class HelloApplication extends Application {
         primaryStage.setScene(scene);
         primaryStage.initStyle(StageStyle.UNDECORATED); // Borderless window
         primaryStage.setTitle("Spotlight Clone");
-        primaryStage.hide(); // Start hidden (toggle via hotkey)
+        primaryStage.show(); // Start hidden (toggle via hotkey)
     }
 
     @Override
