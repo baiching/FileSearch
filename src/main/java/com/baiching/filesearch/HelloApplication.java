@@ -1,13 +1,16 @@
 package com.baiching.filesearch;
 
+import com.baiching.filesearch.utils.FileUtils;
 import com.baiching.filesearch.utils.HotKeyManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.skin.SliderSkin;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.util.Set;
 
 public class HelloApplication extends Application {
     private static Stage primaryStage;
@@ -15,12 +18,19 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         primaryStage = stage;
-        setupUI();
+        //fileUtils.listAllFilesAndDirectories("E:/").forEach(files-> System.out.println(files));
+
+        //setupUI();
         //HotKeyManager.registerHotKey(this::toggleWindow);
     }
 
-    public static void main(String[] args) {
-        launch();
+    public static void main(String[] args) throws IOException {
+        //launch();
+        FileUtils fileUtils = new FileUtils();
+        //Set<String> files = fileUtils.listAllFilesAndDirectories("C:\\Users\\bachm\\Downloads");
+        Set<String> files = fileUtils.listAllFilesAndDirectories("D:\\");
+
+        files.stream().limit(10).forEach(System.out::println);
     }
 
     // Toggle window visibility (called when Ctrl+Space is pressed)
