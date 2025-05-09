@@ -1,9 +1,9 @@
 package com.baiching.filesearch.utils;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -14,6 +14,43 @@ public class FileUtils {
      */
     public Set<String> listFilesUsingFilesList(String dir) throws IOException {
         try (Stream<Path> stream = Files.list(Paths.get(dir))) {
+            return stream
+                    .filter(file -> !Files.isDirectory(file))
+                    .map(Path::getFileName)
+                    .map(Path::toString)
+                    .collect(Collectors.toSet());
+        }
+    }
+
+    public Set<String> listAllFilesAndDirectories(String dir) throws IOException {
+        Set<String> allPaths = new HashSet<>();
+
+        try (Stream<Path> stream = Files.walk(Paths.get(dir))) {
+            allPaths = stream
+                    .map(Path::toAbsolutePath) // Get absolute full path
+                    .map(Path::toString) // Convert to string
+                    .collect(Collectors.toSet());
+        }
+
+        return allPaths;
+    }
+
+    public Set<String> listFilesUsingFileWalkAndVisitor(String dir) throws IOException {
+        Set<String> fileList = new HashSet<>();
+        Files.walkFileTree(Paths.get(dir), new SimpleFileVisitor<Path>() {
+            @Override
+            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
+                if (!Files.isDirectory(file)) {
+                    fileList.add(file.getFileName().toString());
+                }
+                return FileVisitResult.CONTINUE;
+            }
+        });
+        return fileList;
+    }
+
+    public Set<String> listFilesUsingFileWalk(String dir, int depth) throws IOException {
+        try (Stream<Path> stream = Files.walk(Paths.get(dir), depth)) {
             return stream
                     .filter(file -> !Files.isDirectory(file))
                     .map(Path::getFileName)
