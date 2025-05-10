@@ -24,13 +24,31 @@ public class FileUtils {
 
     public Set<String> listAllFilesAndDirectories(String dir) throws IOException {
         Set<String> allPaths = new HashSet<>();
+        Path startDir = Paths.get(dir);
 
-        try (Stream<Path> stream = Files.walk(Paths.get(dir))) {
-            allPaths = stream
-                    .map(Path::toAbsolutePath) // Get absolute full path
-                    .map(Path::toString) // Convert to string
-                    .collect(Collectors.toSet());
-        }
+        Files.walkFileTree(startDir, new SimpleFileVisitor<>() {
+            @Override
+            public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) {
+                allPaths.add(dir.toAbsolutePath().toString());
+                return FileVisitResult.CONTINUE;
+            }
+
+            @Override
+            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
+                allPaths.add(file.toAbsolutePath().toString());
+                return FileVisitResult.CONTINUE;
+            }
+
+            @Override
+            public FileVisitResult visitFileFailed(Path file, IOException exc) {
+                if (exc instanceof AccessDeniedException) {
+                    // Skip directories/files that trigger access denied
+                    return FileVisitResult.SKIP_SUBTREE;
+                }
+                // Log other errors if needed
+                return FileVisitResult.CONTINUE;
+            }
+        });
 
         return allPaths;
     }
