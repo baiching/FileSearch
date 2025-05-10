@@ -61,7 +61,6 @@ public class DBOperations {
             while (rs.next()) {
                 results.add(rs.getString("path"));
             }
-
         }
 
         return results;
