@@ -40,6 +40,7 @@ public class DBOperations {
                 }
             });
         }
+        System.out.println("Finished writing paths to database");
     }
     private void insertPath(Path path, PreparedStatement ps) {
         try {

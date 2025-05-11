@@ -1,5 +1,6 @@
 package com.baiching.filesearch;
 
+import com.baiching.filesearch.utils.DBOperations;
 import com.baiching.filesearch.utils.FileUtils;
 import com.baiching.filesearch.utils.HotKeyManager;
 import javafx.application.Application;
@@ -10,6 +11,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Set;
 
 public class HelloApplication extends Application {
@@ -24,13 +26,21 @@ public class HelloApplication extends Application {
         //HotKeyManager.registerHotKey(this::toggleWindow);
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, SQLException {
         //launch();
         FileUtils fileUtils = new FileUtils();
         //Set<String> files = fileUtils.listAllFilesAndDirectories("C:\\Users\\bachm\\Downloads");
         Set<String> files = fileUtils.listAllFilesAndDirectories("D:\\");
 
-        files.stream().limit(10).forEach(System.out::println);
+        DBOperations db = new DBOperations();
+//        db.createDatabase();
+//        db.writePathToDB("D:\\");
+//        System.out.println("Beginning to write paths to database");
+//        System.out.println("Finished writing paths to database");
+
+        System.out.println(db.searchPaths("ex2.R"));
+
+        //files.stream().limit(10).forEach(System.out::println);
     }
 
     // Toggle window visibility (called when Ctrl+Space is pressed)
