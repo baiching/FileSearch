@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.gluonhq.charm.glisten.control.DropdownButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.Pane?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <DropdownButton layoutX="183.0" layoutY="78.0">
+          <items>
+              <MenuItem text="[C:] Windows" />
+              <MenuItem text="[D:] Drive " />
+              <MenuItem text="[E:] Drive" />
+          </items>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </DropdownButton>
+      <Label layoutX="125.0" layoutY="83.0" text="Select" />
+   </children>
+</Pane>
