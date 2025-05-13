@@ -33,10 +33,10 @@ public class HelloApplication extends Application {
         Set<String> files = fileUtils.listAllFilesAndDirectories("D:\\");
 
         DBOperations db = new DBOperations();
-//        db.createDatabase();
-//        db.writePathToDB("D:\\");
-//        System.out.println("Beginning to write paths to database");
-//        System.out.println("Finished writing paths to database");
+        db.createDatabase();
+        db.writePathToDB("D:\\");
+        System.out.println("Beginning to write paths to database");
+        System.out.println("Finished writing paths to database");
 
         System.out.println(db.searchPaths("ex2.R"));
 
