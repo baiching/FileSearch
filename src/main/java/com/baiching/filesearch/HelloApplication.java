@@ -35,13 +35,7 @@ public class HelloApplication extends Application {
         Scene scene = new Scene(fxmlLoader.load());
 
         primaryStage.setScene(scene);
-        //primaryStage.initStyle(StageStyle.UNDECORATED); // Borderless window
         primaryStage.setTitle("Spotlight Clone");
-        primaryStage.show(); // Start hidden (toggle via hotkey)
-    }
-
-    @Override
-    public void stop() {
-        HotKeyManager.unregisterHotKey();
+        primaryStage.show();
     }
 }
