@@ -40,4 +40,5 @@ build/
 
 ### Database ###
 *.db
+*.db*
 *.sqlite

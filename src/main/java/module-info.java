@@ -7,6 +7,8 @@ module com.baiching.filesearch {
     requires com.sun.jna;
     requires com.sun.jna.platform;
     requires java.sql;
+    requires com.gluonhq.charm.glisten;
+    requires com.gluonhq.attach.util;
 
     opens com.baiching.filesearch to javafx.fxml;
     exports com.baiching.filesearch;

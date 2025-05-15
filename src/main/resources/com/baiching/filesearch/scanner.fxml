@@ -10,7 +10,7 @@
    <children>
       <Label layoutX="130.0" layoutY="74.0" text="Select" />
       <Button fx:id="scanDrive" layoutX="321.0" layoutY="68.0" mnemonicParsing="false" onAction="#scanButton" text="scan" />
-      <AutoCompleteTextField layoutX="130.0" layoutY="143.0" prefHeight="27.0" prefWidth="308.0" />
+      <AutoCompleteTextField fx:id="autoText" layoutX="130.0" layoutY="143.0" onInputMethodTextChanged="#autocompleteText" prefHeight="27.0" prefWidth="308.0" />
       <ComboBox fx:id="comboBox" layoutX="171.0" layoutY="71.0" prefWidth="150.0" promptText="drive" />
       
    </children>

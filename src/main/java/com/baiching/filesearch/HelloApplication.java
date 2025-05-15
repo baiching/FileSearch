@@ -38,4 +38,9 @@ public class HelloApplication extends Application {
         primaryStage.setTitle("Spotlight Clone");
         primaryStage.show();
     }
+
+    @Override
+    public void stop() {
+        HotKeyManager.unregisterHotKey();
+    }
 }
