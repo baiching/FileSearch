@@ -3,19 +3,20 @@ package com.baiching.filesearch;
 import com.baiching.filesearch.utils.DBOperations;
 import com.gluonhq.charm.glisten.control.AutoCompleteTextField;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.MenuItem;
-import javafx.scene.input.InputMethodEvent;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.ListView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.Collections;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ScannerController implements Initializable {
@@ -25,8 +26,11 @@ public class ScannerController implements Initializable {
     @FXML
     private Button scanDrive;
 
-//    @FXML
-//    private AutoCompleteTextField<String> autoText;
+    @FXML
+    private AutoCompleteTextField<String> autoText;
+
+    @FXML
+    private ListView<String> lstView;
 
     private final DBOperations db = new DBOperations();
 
@@ -48,6 +52,7 @@ public class ScannerController implements Initializable {
 //            }
 //        });
 
+
     }
 
     public void getComboBoxData(ActionEvent event) {
@@ -62,6 +67,30 @@ public class ScannerController implements Initializable {
         db.writePathToDB(selectedItem);
     }
 
-    public void autocompleteText(InputMethodEvent inputMethodEvent) {
+    public void autocompleteText(KeyEvent inputMethodEvent) {
+
+        if (inputMethodEvent.getCode() == KeyCode.ENTER) {
+            String input = autoText.getText().trim();
+            if (!input.isEmpty()) {
+                List<String> results;
+                try {
+                    results = db.searchPaths(autoText.getValue());
+                    System.out.println(results);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                lstView.getItems().add(String.valueOf(results));
+            }
+        }
+
+//        List<String> results;
+//        try {
+//            results = db.searchPaths(autoText.getValue());
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+//        System.out.println(results);
+//        ObservableList<String> list = FXCollections.observableArrayList(results);
+//        lstView.setItems(list);
     }
 }
