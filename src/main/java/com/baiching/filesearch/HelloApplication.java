@@ -25,7 +25,7 @@ public class HelloApplication extends Application {
         launch();
 //        DBOperations db = new DBOperations();
 //
-//        System.out.println(db.searchPaths("ex2.R"));
+//        System.out.println(db.searchPaths("baiching_frankfurt"));
     }
 
     private void setupUI() throws IOException {
@@ -35,7 +35,7 @@ public class HelloApplication extends Application {
         Scene scene = new Scene(fxmlLoader.load());
 
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Spotlight Clone");
+        primaryStage.setTitle("File Search");
         primaryStage.show();
     }
 
