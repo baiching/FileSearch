@@ -73,7 +73,7 @@ public class ScannerController implements Initializable {
             if (!input.isEmpty()) {
                 List<String> results;
                 try {
-                    results = db.searchPaths(autoText.getValue());
+                    results = db.searchPaths(autoText.getText());
                     System.out.println(results);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);

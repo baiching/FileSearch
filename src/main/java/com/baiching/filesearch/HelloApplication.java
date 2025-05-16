@@ -23,9 +23,6 @@ public class HelloApplication extends Application {
 
     public static void main(String[] args) throws IOException, SQLException {
         launch();
-//        DBOperations db = new DBOperations();
-//
-//        System.out.println(db.searchPaths("baiching_frankfurt"));
     }
 
     private void setupUI() throws IOException {
