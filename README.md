@@ -4,6 +4,8 @@ A fast and efficient file search utility for Windows built with JavaFX.
 
 ## Features
 
+![File Search UI](src/main/resources/assets/image/fileSearch.jpg)
+
 - Quick file searching with fuzzy matching
 - Global hotkey support (Ctrl+Space) for quick access
 - Clean and responsive JavaFX UI
