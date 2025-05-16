@@ -34,7 +34,7 @@ public class DBOperations {
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
-                    System.out.println(dir.toString());
+                    //System.out.println(dir.toString());
                     return FileVisitResult.CONTINUE;
                 }
 
@@ -45,7 +45,7 @@ public class DBOperations {
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
-                    System.out.println(dir.toString());
+                    //System.out.println(dir.toString());
                     return FileVisitResult.CONTINUE;
                 }
 

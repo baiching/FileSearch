@@ -57,12 +57,11 @@ public class ScannerController implements Initializable {
 
     public void getComboBoxData(ActionEvent event) {
         String selectedItem = comboBox.getValue();
-        System.out.println(selectedItem);
+        //System.out.println(selectedItem);
     }
     @FXML
     public void scanButton(ActionEvent actionEvent) throws SQLException, IOException {
         String selectedItem = comboBox.getValue();
-        System.out.println(selectedItem);
         DBOperations db = new DBOperations();
         db.writePathToDB(selectedItem);
     }
