@@ -10,6 +10,13 @@ A fast and efficient file search utility for Windows built with JavaFX.
 - Global hotkey support (Ctrl+Space) for quick access
 - Clean and responsive JavaFX UI
 - Efficient file indexing and searching algorithms
+- SQLite database backend for fast indexed searches
+- Batch processing for efficient file system indexing
+- Direct file opening from search results
+
+## Planned Features
+
+- Real-time autocomplete suggestions while typing
 
 ## Requirements
 
