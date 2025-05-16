@@ -17,6 +17,7 @@ A fast and efficient file search utility for Windows built with JavaFX.
 ## Planned Features
 
 - Real-time autocomplete suggestions while typing
+- Open file from search results
 
 ## Requirements
 
@@ -34,8 +35,8 @@ A fast and efficient file search utility for Windows built with JavaFX.
 ## Usage
 
 1. Launch the application
-2. Use the search bar to find files
-3. Press Ctrl+Space from anywhere to quickly open the search window
+2. Scan drives for files
+3. Use the search bar to find files
 
 ## Building from Source
 
