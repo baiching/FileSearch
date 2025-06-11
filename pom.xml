@@ -85,6 +85,22 @@
       <artifactId>util</artifactId>
       <version>4.0.11</version> <!-- Replace with the version compatible with your project -->
     </dependency>
+
+    <dependency>
+      <groupId>org.apache.lucene</groupId>
+      <artifactId>lucene-core</artifactId>
+      <version>10.2.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.lucene</groupId>
+      <artifactId>lucene-analysis-common</artifactId>
+      <version>10.2.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.lucene</groupId>
+      <artifactId>lucene-queryparser</artifactId>
+      <version>10.2.1</version>
+    </dependency>
   </dependencies>
 
   <build>
