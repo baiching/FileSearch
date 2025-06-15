@@ -27,8 +27,8 @@ import java.util.List;
 
 public class LuceneSearchService {
     private static final String SEARCH_FIELD = "path";  // TextField used for searching
-    private final IndexReader reader;
-    private final IndexSearcher searcher;
+    private IndexReader reader;
+    private IndexSearcher searcher;
     private final Analyzer analyzer;
     private final QueryParser queryParser;
 
@@ -72,6 +72,19 @@ public class LuceneSearchService {
             results.add(doc.get(SEARCH_FIELD));
         }
         return results;
+    }
+
+    /**
+     * Refreshes the reader to see latest index changes
+     * @throws IOException If there's an error refreshing the reader
+     */
+    public void refresh() throws IOException {
+        IndexReader newReader = DirectoryReader.openIfChanged((DirectoryReader) reader);
+        if (newReader != null) {
+            reader.close();
+            this.reader = newReader;
+            this.searcher = new IndexSearcher(newReader);
+        }
     }
 
     /**
