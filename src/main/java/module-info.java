@@ -10,6 +10,7 @@ module com.baiching.filesearch {
     requires com.gluonhq.charm.glisten;
     requires com.gluonhq.attach.util;
     requires org.apache.lucene.core;
+    requires org.apache.lucene.queryparser;
 
     opens com.baiching.filesearch to javafx.fxml;
     exports com.baiching.filesearch;
