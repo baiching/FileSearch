@@ -9,6 +9,7 @@ module com.baiching.filesearch {
     requires java.sql;
     requires com.gluonhq.charm.glisten;
     requires com.gluonhq.attach.util;
+    requires org.apache.lucene.core;
 
     opens com.baiching.filesearch to javafx.fxml;
     exports com.baiching.filesearch;

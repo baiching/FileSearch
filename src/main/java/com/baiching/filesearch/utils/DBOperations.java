@@ -23,7 +23,7 @@ public class DBOperations {
              PreparedStatement pstmt = conn.prepareStatement("INSERT OR IGNORE INTO paths VALUES (?)")) {
 
             conn.setAutoCommit(false);
-            final int batchSize = 1000;
+            final int batchSize = 5000;
             AtomicInteger counter = new AtomicInteger(0);
 
             Files.walkFileTree(startDir, new SimpleFileVisitor<>() {
@@ -56,6 +56,9 @@ public class DBOperations {
                             : FileVisitResult.CONTINUE;
                 }
             });
+
+            pstmt.executeBatch();
+            conn.commit();
         }
         System.out.println("Finished writing paths to database");
     }
