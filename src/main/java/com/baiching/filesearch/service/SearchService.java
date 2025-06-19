@@ -1,4 +1,4 @@
-package com.baiching.filesearch.search;
+package com.baiching.filesearch.service;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
