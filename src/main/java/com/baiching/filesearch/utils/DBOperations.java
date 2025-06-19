@@ -97,4 +97,19 @@ public class DBOperations {
 
         return results;
     }
+
+    public List<String> getAllPaths() {
+        List<String> results = new ArrayList<>();
+        try (Connection conn = DatabaseConnection.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT path FROM paths")) {
+            while (rs.next()) {
+                results.add(rs.getString("path"));
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return results;
+    }
 }
