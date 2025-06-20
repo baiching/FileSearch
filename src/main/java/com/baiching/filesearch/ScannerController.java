@@ -1,5 +1,6 @@
 package com.baiching.filesearch;
 
+import com.baiching.filesearch.search.LuceneSearchService;
 import com.baiching.filesearch.utils.DBOperations;
 import com.gluonhq.charm.glisten.control.AutoCompleteTextField;
 import javafx.collections.FXCollections;
@@ -35,6 +36,7 @@ public class ScannerController implements Initializable {
     private final DBOperations db = new DBOperations();
 
 
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         comboBox.setItems(FXCollections.observableArrayList("C:\\", "D:\\", "E:\\"));
@@ -66,16 +68,21 @@ public class ScannerController implements Initializable {
         db.writePathToDB(selectedItem);
     }
 
-    public void autocompleteText(KeyEvent inputMethodEvent) {
+    public void autocompleteText(KeyEvent inputMethodEvent) throws IOException {
+        LuceneSearchService searchService = new LuceneSearchService("src/main/resources/lucene/write.lock");
 
         if (inputMethodEvent.getCode() == KeyCode.ENTER) {
             String input = autoText.getText().trim();
             if (!input.isEmpty()) {
                 List<String> results;
                 try {
-                    results = db.searchPaths(autoText.getText());
-                    System.out.println(results);
+                    System.out.println(autoText.getText());
+                    results = searchService.search(autoText.getText(), 10);
+//                    results = db.searchPaths(autoText.getText());
+//                    System.out.println(results);
                 } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
                 lstView.getItems().add(String.valueOf(results));

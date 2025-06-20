@@ -91,6 +91,7 @@ public class LuceneIndexManager {
     }
 
     private Document createDocument(String path) {
+        System.out.println(path);
         Document doc = new Document();
         doc.add(new StringField("path", path, Field.Store.YES));
         String filename = Paths.get(path).getFileName().toString();
