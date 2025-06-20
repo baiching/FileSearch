@@ -14,6 +14,8 @@ import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.index.IndexWriterConfig.OpenMode;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
@@ -30,7 +32,13 @@ public class LuceneIndexManager {
     private final IndexWriter writer;
 
     public LuceneIndexManager(String indexDirPath) throws IOException {
-        this.directory = FSDirectory.open(Paths.get(indexDirPath));
+        Path dirPath = Paths.get(indexDirPath);
+
+        // Ensure the directory exists (create if missing)
+        if (!Files.exists(dirPath)) {
+            Files.createDirectories(dirPath); // Creates all parent dirs too
+        }
+        this.directory = FSDirectory.open(dirPath);
         this.analyzer = new StandardAnalyzer();
         IndexWriterConfig config = new IndexWriterConfig(analyzer);
         config.setOpenMode(OpenMode.CREATE_OR_APPEND);
