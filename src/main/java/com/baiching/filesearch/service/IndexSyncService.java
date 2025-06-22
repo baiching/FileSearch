@@ -26,7 +26,6 @@ public class IndexSyncService {
         List<String> paths = dbOperations.getAllPaths();
         lastPathSet = new HashSet<>(paths);
         indexManager.createIndex(paths);
-
     }
 
     public void incrementalSync() {

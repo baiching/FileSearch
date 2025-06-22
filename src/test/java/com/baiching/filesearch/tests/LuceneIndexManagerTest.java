@@ -1,6 +1,7 @@
 package com.baiching.filesearch.tests;
 
 import com.baiching.filesearch.search.LuceneIndexManager;
+import com.baiching.filesearch.utils.DBOperations;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
@@ -17,6 +18,7 @@ import org.junit.jupiter.api.io.TempDir;
 import org.mockito.*;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
@@ -32,6 +34,7 @@ public class LuceneIndexManagerTest {
 
     @BeforeEach
     void setUp() throws IOException {
+        System.out.println(tempDir.toString());
         indexManager = new LuceneIndexManager(tempDir.toString());
     }
 
@@ -43,15 +46,16 @@ public class LuceneIndexManagerTest {
     }
 
     @Test
-    void createIndex_shouldCreateNewIndexWithDocuments() throws IOException {
-        // Arrange
-        List<String> paths = Arrays.asList(
-                "/path/to/file1.txt",
-                "/path/to/file2.jpg"
-        );
+    void createIndex_shouldCreateNewIndexWithDocuments(@TempDir Path testDir) throws IOException {
+        // 1. Create dedicated index directory inside temp test space
+        Path indexPath = testDir.resolve("lucene-index");
+        Files.createDirectories(indexPath);
 
-        // Act
-        indexManager.createIndex(paths);
+        DBOperations dbOps = new DBOperations();
+        List<String> paths = dbOps.getAllPaths();
+
+        // 2. Initialize index manager with test directory
+        indexManager = new LuceneIndexManager(indexPath.toString());
 
         // Assert
         try (Directory directory = FSDirectory.open(tempDir);
@@ -67,15 +71,17 @@ public class LuceneIndexManagerTest {
                     () -> assertEquals(paths.get(1), doc2.get("path"))
             );
         }
+
     }
 
     @Test
     void createIndex_shouldClearExistingIndex() throws IOException {
+        DBOperations dbOps = new DBOperations();
         // Arrange - Add initial docs
-        indexManager.addDocument(List.of("/existing/file.txt"));
+        indexManager.addDocument(dbOps.getAllPaths());
         indexManager.commit();
 
-        List<String> newPaths = List.of("/new/file1.txt", "/new/file2.txt");
+        List<String> newPaths = List.of("src/main/resources/test/file1.txt", "src/main/resources/test/file2.txt");
 
         // Act
         indexManager.createIndex(newPaths);
@@ -109,7 +115,7 @@ public class LuceneIndexManagerTest {
     @Test
     void createIndex_shouldCommitChanges() throws IOException {
         // Arrange
-        List<String> paths = List.of("/path/to/file.txt");
+        List<String> paths = List.of("src/main/resources/test/file1.txt");
 
         // Act
         indexManager.createIndex(paths);
@@ -139,7 +145,7 @@ public class LuceneIndexManagerTest {
             };
 
             // Act
-            manager.createIndex(List.of("/test/path"));
+            manager.createIndex(List.of("src/main/resources/test/"));
 
             // Assert
             IndexWriter writer = mockedWriter.constructed().get(0);
@@ -161,7 +167,7 @@ public class LuceneIndexManagerTest {
 
             // Act & Assert
             IOException exception = assertThrows(IOException.class,
-                    () -> manager.createIndex(List.of("/failing/path")));
+                    () -> manager.createIndex(List.of("src/main/resources/test/")));
 
             assertEquals("Test exception", exception.getMessage());
         }

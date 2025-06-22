@@ -13,6 +13,8 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.index.IndexWriterConfig.OpenMode;
 
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -27,9 +29,12 @@ public class LuceneIndexManager {
     * deleteDocument(String path): Removes a path from the index.
     * It will manage the IndexWriter and Analyzer instances.
      */
-    private final Directory directory;
-    private final Analyzer analyzer;
-    private final IndexWriter writer;
+    private Directory directory;
+    private Analyzer analyzer;
+    private IndexWriter writer;
+    private String indexPath;
+
+    public LuceneIndexManager() {}
 
     public LuceneIndexManager(String indexDirPath) throws IOException {
         Path dirPath = Paths.get(indexDirPath);
@@ -39,10 +44,11 @@ public class LuceneIndexManager {
             Files.createDirectories(dirPath); // Creates all parent dirs too
         }
         this.directory = FSDirectory.open(dirPath);
+        this.indexPath = dirPath.toString();
         this.analyzer = new StandardAnalyzer();
         IndexWriterConfig config = new IndexWriterConfig(analyzer);
         config.setOpenMode(OpenMode.CREATE_OR_APPEND);
-        config.setRAMBufferSizeMB(256);
+        //config.setRAMBufferSizeMB(256);
         this.writer = new IndexWriter(directory, config);
     }
 
@@ -80,22 +86,24 @@ public class LuceneIndexManager {
         }
     }
 
+    public void close() throws IOException {
+        writer.close();
+        directory.close();
+    }
     public void commit() throws IOException {
         writer.commit();
     }
 
-    public void close() throws IOException {
-        writer.close();
-        directory.close();
-        // No need to close analyzer
-    }
+    private Document createDocument(String fpath) throws IOException {
+        Path path = Paths.get(fpath);
+        File file = path.toFile();
+        Document document = new Document();
 
-    private Document createDocument(String path) {
-        System.out.println(path);
-        Document doc = new Document();
-        doc.add(new StringField("path", path, Field.Store.YES));
-        String filename = Paths.get(path).getFileName().toString();
-        doc.add(new TextField("filename", filename, Field.Store.NO));
-        return doc;
+        FileReader fileReader = new FileReader(file);
+        document.add(new TextField("contents", fileReader));
+        document.add(new StringField("path", file.getPath(), Field.Store.YES));
+        document.add(new StringField("filename", file.getName(), Field.Store.YES));
+
+        return document;
     }
 }

@@ -9,10 +9,7 @@ package com.baiching.filesearch.search;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
-import org.apache.lucene.index.DirectoryReader;
-import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.index.StoredFields;
-import org.apache.lucene.index.Term;
+import org.apache.lucene.index.*;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.*;
 import org.apache.lucene.store.Directory;
@@ -79,6 +76,16 @@ public class LuceneSearchService {
     public void close() throws IOException {
         reader.close();
         // No need to close analyzer
+    }
+
+    public void printIndexedFields() throws IOException {
+        System.out.println("=== Indexed Fields ===");
+        for (LeafReaderContext leaf : reader.leaves()) {
+            FieldInfos fieldInfos = leaf.reader().getFieldInfos();
+            for (FieldInfo info : fieldInfos) {
+                System.out.println(info.name + " (type: " + info.getIndexOptions() + ")");
+            }
+        }
     }
 
 }

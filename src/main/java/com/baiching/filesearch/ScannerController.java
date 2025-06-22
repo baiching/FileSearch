@@ -69,17 +69,17 @@ public class ScannerController implements Initializable {
     }
 
     public void autocompleteText(KeyEvent inputMethodEvent) throws IOException {
-        LuceneSearchService searchService = new LuceneSearchService("src/main/resources/lucene/write.lock");
+        LuceneSearchService searchService = new LuceneSearchService("src/main/resources/lucene/");
 
         if (inputMethodEvent.getCode() == KeyCode.ENTER) {
             String input = autoText.getText().trim();
             if (!input.isEmpty()) {
                 List<String> results;
                 try {
-                    System.out.println(autoText.getText());
+//                    System.out.println(autoText.getText());
                     results = searchService.search(autoText.getText(), 10);
 //                    results = db.searchPaths(autoText.getText());
-//                    System.out.println(results);
+                    System.out.println(results);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 } catch (Exception e) {
