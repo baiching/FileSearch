@@ -1,10 +1,9 @@
-package com.baiching.filesearch;
+package com.baiching.filesearch.ui;
 
 import com.baiching.filesearch.search.LuceneSearchService;
 import com.baiching.filesearch.utils.DBOperations;
 import com.gluonhq.charm.glisten.control.AutoCompleteTextField;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

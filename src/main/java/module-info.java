@@ -14,4 +14,6 @@ module com.baiching.filesearch {
 
     opens com.baiching.filesearch to javafx.fxml;
     exports com.baiching.filesearch;
+    exports com.baiching.filesearch.ui;
+    opens com.baiching.filesearch.ui to javafx.fxml;
 }

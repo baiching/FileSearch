@@ -1,4 +1,4 @@
-package com.baiching.filesearch;
+package com.baiching.filesearch.ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
